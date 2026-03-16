@@ -285,12 +285,22 @@
       log('页面已加载', 'info');
       initPageAgent();
       
+      // 默认 WS 地址
+      const defaultWsUrl = 'wss://noble-glossiest-ivan.ngrok-free.dev';
+      
       // 从 URL 参数读取 WS 地址（如果有）
       const urlParams = new URLSearchParams(window.location.search);
-      const wsUrl = urlParams.get('ws');
+      let wsUrl = urlParams.get('ws');
+      
+      if (!wsUrl && defaultWsUrl) {
+        wsUrl = defaultWsUrl;
+      }
+      
       if (wsUrl) {
         document.getElementById('ws-url-input').value = wsUrl;
-        log(`从 URL 加载 WS 地址：${wsUrl}`, 'info');
+        log(`WS 地址：${wsUrl}`, 'info');
+        // 自动连接
+        setTimeout(() => connectWS(), 500);
       }
     };
   </script>
