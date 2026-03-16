@@ -72,33 +72,16 @@
     </div>
 
     <div class="panel" style="margin-top: 20px;">
-      <h2>🎮 Demo 操作区</h2>
-      <div id="demo-area">
-        <h3>这是一个模拟的表单页面</h3>
-        <div class="form-group">
-          <label>用户名</label>
-          <input type="text" id="username" placeholder="请输入用户名">
-        </div>
-        <div class="form-group">
-          <label>密码</label>
-          <input type="password" id="password" placeholder="请输入密码">
-        </div>
-        <div class="form-group">
-          <label>邮箱</label>
-          <input type="email" id="email" placeholder="请输入邮箱">
-        </div>
-        <div class="form-group">
-          <label>角色</label>
-          <select id="role">
-            <option value="">请选择角色</option>
-            <option value="admin">管理员</option>
-            <option value="user">普通用户</option>
-            <option value="guest">访客</option>
-          </select>
-        </div>
-        <button class="btn" id="submit-btn" style="margin-top: 10px;">提交</button>
-        <button class="btn" id="reset-btn" style="margin-top: 10px; background: #6b7280;">重置</button>
+      <h2>🎮 操作区</h2>
+      <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center;">
+        <label style="font-size: 14px; color: #555;">目标页面：</label>
+        <input type="text" id="target-url" value="https://pe-run.tzucpa.cn" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 6px;" placeholder="输入网址">
+        <button class="btn" onclick="loadIframe()" style="padding: 8px 16px;">加载</button>
       </div>
+      <div id="demo-area" style="min-height: 500px; padding: 0; overflow: hidden;">
+        <iframe id="target-frame" src="https://pe-run.tzucpa.cn" style="width: 100%; height: 500px; border: none;"></iframe>
+      </div>
+      <p style="margin-top: 10px; font-size: 13px; color: #666;">⚠️ 如果页面显示空白或拒绝连接，说明目标网站禁止被 iframe 嵌入（X-Frame-Options 限制）</p>
     </div>
   </div>
 
@@ -263,6 +246,16 @@
     async function executeScroll(command) {
       window.scrollBy(0, 200);
       log('已向下滚动 200px', 'success');
+    }
+
+    // 加载 iframe
+    function loadIframe() {
+      const url = document.getElementById('target-url').value.trim();
+      const frame = document.getElementById('target-frame');
+      if (url) {
+        frame.src = url;
+        log(`加载页面：${url}`, 'info');
+      }
     }
 
     // 快捷测试
